@@ -1,16 +1,12 @@
-<form action="/login" method="POST">
-  <div>
-    <label for="username">Username:</label>
-    <input type="text" name="password">
-  </div>
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" name="password">
-  </div>
-  {{#if message}}
-    <div class="error-message">{{ message }}</div>
+<div class="signup">
+  {{#if err}}
+  <h2>{{err}}</h2>
+  {{else}}
+  <h2>Login</h2>
   {{/if}}
-  <div>
-    <input type="submit" value="Log in">
-  </div>
-</form>
+  <form action="/login" method="POST">
+    <input type="email" name="email" placeholder="Email" />
+    <input type="password" name="password" placeholder="Password" />
+    <input type="submit" value="Login">
+  </form>
+</div>
