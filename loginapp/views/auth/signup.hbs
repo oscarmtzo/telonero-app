@@ -1,9 +1,9 @@
 <!--- views/auth/signup.hbs -->
 <form action="/signup" method="POST" id="form-container">
-  <label for="username">Username</label>
-  <input type="password" type="text" placeholder="Your username">
+  <label for="username">Username</label> 
+  <input type="username" type="text" name="username" placeholder="Your username"><br/>
   <label for="password">Password</label>
-  <input type="username" type="password" name="username" placeholder="Your password">
+  <input type="password" type="password" name="password" placeholder="Your password">
 
   {{#if message}}
   <div class="error-message">{{ message }}</div>

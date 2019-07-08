@@ -4,11 +4,14 @@ const authRoutes        = express.Router()
 
 //user model
 const User              = require("../models/user")
-
+ // passport require
+ const passport = require("passport")
 
 //bcrypt to encrypt passwords
 const bcrypt            = require("bcrypt")
 const bcryptSalt        = 10 //numero de iteraciones para la encriptacion de la contraseña
+const ensureLogin       = require("connect-ensure-login")
+
 authRoutes.get("/signup", (req, res, next) => {
   res.render("auth/signup")
 })
@@ -42,6 +45,27 @@ authRoutes.post("/signup", (req, res, next) =>{
   })
   .catch(error => {
     next(error)
-  })
-})  
+  }) 
+}) 
+authRoutes.get("/login", (req, res, next) => {
+  res.render("auth/login", { "message": req.flash("error") })
+})
+
+authRoutes.post("/login", passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+  failureFlash: true,
+  passReqToCallback: true
+}))
+
+authRoutes.get("/private-page", ensureLogin.ensureLoggedIn(), (req, res) => {
+  res.render("private", { user: req.user })
+})
+
+authRoutes.get("/logout", (req, res) => {
+  req.logOut()
+  res.redirect("/login")
+})
+
+  
 module.exports = authRoutes

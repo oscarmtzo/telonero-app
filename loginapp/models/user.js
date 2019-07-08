@@ -30,3 +30,10 @@ module.exports = User
 //          14.- El siguiente paso es definir los 3 metodos que passport necestia para trabajar, estos metodos son la estrategia, user serializer y user deserializer se usan las siguinetes configuraiones:
 //           a.-Stretegy.- define que estrategia vamos a usar y su configuracion, esto incluyeel error
 //           b.- User serializer y User deserializer. Ayudan a mantener la menor cantidad de datos in el sesion, estas definene que info es almacenada y como recuperar esta info de la base de datos
+//           15.- Vamos a configurar passport para que soporte el loggin in o inicio de sesion, vamos a solicitar el paquete, debemos usar passport en nuestras rutas
+//           16.- Ahora vamos a definir las rutas y su correspondiente funcionalidad en /routes/authRoutes.js
+//           17.- Definidas las rutas ahora vamos a crear en views/auth/login.hbs el formulario para iniciar sesion son los campos de ususario y contraseña
+//           18.- Instalaremos npm i --save connect-ensure-login, una vez instalado, vamos a solicitarlo en nuestras rutas ubicadas en /routes/authRoutes asi como definir la ruta con get
+//           19.- Ahora creamos una vista privada para el usuario cuando inicie sesion
+//           20.- Instalamos el paqute connect-flash npm i --save connect-flash
+//           21.- Solicitamos ek apquete al inicio de app.js, ademas cambiamos LocalStrategy
