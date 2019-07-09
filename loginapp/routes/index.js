@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const uploadCloud = require("../config/cloudinary")
 const {
   getSignup,
   postSignup,
@@ -7,6 +8,14 @@ const {
   getProfile,
   logout
 } = require("../controllers/auth.controllers");
+const { 
+  getUploadImg,
+  postUploadImg
+}  = require("../controllers/picture.controllers")
+const {
+  getPostImg,
+  postPostImg
+} = require("../controllers/postPicture.controllers")
 const { catchErrors } = require("../middlewares/handlers");
 const { isLoggedIn } = require("../middlewares/auth");
 
@@ -21,5 +30,13 @@ router.post("/login", postLogin);
 router.get("/profile", isLoggedIn, getProfile);
 
 router.get("/logout", logout);
+
+router.get("/profile", getUploadImg )
+
+router.post("/profile", uploadCloud.single('photo'), postUploadImg)
+
+router.get("/profile", getPostImg)
+
+router.post("/profile", uploadCloud.single('photo'),postPostImg)
 
 module.exports = router;
