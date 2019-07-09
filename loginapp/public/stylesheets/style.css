@@ -1,8 +1,55 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0; }
 
 a {
-  color: #00B7FF; }
+  color: #138ab9; }
+
+.telon {
+  background-image: url("../images/telon.png");
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.publico {
+  background-image: url("../images/publico.gif");
+  width: 100vw;
+  height: 100vh;
+  background-size: cover; }
+
+.publico button {
+  height: 8vh;
+  width: 15vw;
+  border-radius: 3vh;
+  margin-top: 10%; }
+
+.publico img {
+  height: 40vh; }
+
+.todo {
+  display: flex;
+  flex-direction: row; }
+
+.mapa {
+  display: flex;
+  flex-direction: column;
+  background-color: red;
+  width: 33vw; }
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  background-color: #00ff22;
+  width: 33vw; }
+
+.reproductos {
+  display: flex;
+  flex-direction: column;
+  background-color: #0a1b79;
+  width: 33vw; }
 
 /*# sourceMappingURL=style.css.map */

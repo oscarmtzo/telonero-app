@@ -1,9 +1,12 @@
-<!--- views/auth/signup.hbs -->
 <div class="signup">
-  <h2>Signup</h2>
-  <form action="/signup" method="POST">
+  {{#if err}}
+  <h2>{{err}}</h2>
+  {{else}}
+  <h2>Login</h2>
+  {{/if}}
+  <form action="/login" method="POST">
     <input type="email" name="email" placeholder="Email" />
     <input type="password" name="password" placeholder="Password" />
-    <input type="submit" value="Register">
+    <input type="submit" value="Login">
   </form>
 </div>
