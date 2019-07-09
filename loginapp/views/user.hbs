@@ -23,12 +23,12 @@
     </script>
   </div>
   <div class="posts">
-    <form action="/profile" method="post">
+    <form action="/users/{{id}}" method="post">
 
       <label for="content">content</label>
       <input type="text" name="content" class="content">
 
-      </di>
+
       <button type="submit">Post</button>
     </form>
     {{#each post}}

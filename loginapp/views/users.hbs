@@ -23,25 +23,13 @@
     </script>
   </div>
   <div class="posts">
-    <form action="/profile" method="post">
-
-      <label for="content">content</label>
-      <input type="text" name="content" class="content">
-
-      </di>
-      <button type="submit">Post</button>
-    </form>
-    {{#each post}}
-    <div>
-      <p>{{this.name}} </p>
-      <p>{{this.content}}</p>
-
-    </div>
+    {{#each users}}
+    <p>si</p>
+    <a href="/users/{{this._id}}">{{this.name}}</a>
     {{/each}}
   </div>
   <div class="reproductor">
-    <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0"
-      allowtransparency="true" allow="encrypted-media"></iframe>
+    <p>jk</p>
   </div>
 </div>
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
