@@ -6,7 +6,10 @@ const {
   getLogin,
   postLogin,
   getProfile,
-  logout
+  logout,
+  findUsers,
+  findOneUser,
+  postOther
 } = require("../controllers/auth.controllers");
 const { 
   getUploadImg,
@@ -16,8 +19,11 @@ const {
   getPostImg,
   postPostImg
 } = require("../controllers/postPicture.controllers")
+const Post = require("../models/post");
 const { catchErrors } = require("../middlewares/handlers");
 const { isLoggedIn } = require("../middlewares/auth");
+
+// ...
 
 router.get("/", (req, res, next) => res.render("index"));
 
@@ -31,6 +37,22 @@ router.get("/profile", isLoggedIn, getProfile);
 
 router.get("/logout", logout);
 
+router.post("/profile", (req, res) => {
+  const content = req.body.content;
+  const creatorId = req.user._id;
+  const name = req.user.name;
+  const user = req.user.name;
+  const newPost = new Post({ name, content, creatorId, user });
+  newPost
+    .save()
+    .then(x => {
+      res.redirect("/profile");
+    })
+    .catch(err => console.log("Error!:", err));
+});
+router.post("/users", findUsers);
+router.get("/users/:id", findOneUser);
+router.post("/users/:id", postOther);
 router.get("/profile", getUploadImg )
 
 router.post("/profile", uploadCloud.single('photo'), postUploadImg)
@@ -38,5 +60,4 @@ router.post("/profile", uploadCloud.single('photo'), postUploadImg)
 router.get("/profile", getPostImg)
 
 router.post("/profile", uploadCloud.single('photo'),postPostImg)
-
 module.exports = router;
