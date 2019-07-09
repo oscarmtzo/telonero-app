@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const uploadCloud = require("../config/cloudinary");
 const {
   getSignup,
   postSignup,

@@ -15,6 +15,7 @@ const session = require("express-session");
 // Middleware for check logged user
 const { checkLoggedUser } = require("./middlewares/auth");
 
+
 mongoose
   .connect("mongodb://localhost/loginapp", { useNewUrlParser: true })
   .then(x =>
