@@ -12,8 +12,10 @@
   <div class="mapa">
     <div class="tarjeta">
       <h2>Oh hi {{user.name}}</h2>
+      <img src="{{user.profileImg}}">
     </div>
     <div id='map' style='width: 400px; height: 300px;'></div>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
     <script>
       mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
       var map = new mapboxgl.Map({
@@ -32,4 +34,3 @@
     <p>jk</p>
   </div>
 </div>
-<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>

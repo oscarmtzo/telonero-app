@@ -9,10 +9,24 @@ const {
   logout,
   findUsers,
   findOneUser,
-  postOther
+  postOther,
+  addUser,
+  showArtist,
+  postPostImg2,
+  showArtist2,
+  uploadMusic2,
+  showMusic,
+  showEvents,
+  postEvent
 } = require("../controllers/auth.controllers");
+const {
+  getUploadImg,
+  postUploadImg
+} = require("../controllers/picture.controllers");
+
 const Post = require("../models/post");
-const { catchErrors } = require("../middlewares/handlers");
+
+const { catchErrors, uploadMusic } = require("../middlewares/handlers");
 const { isLoggedIn } = require("../middlewares/auth");
 
 // ...
@@ -43,6 +57,15 @@ router.post("/profile", (req, res) => {
     .catch(err => console.log("Error!:", err));
 });
 router.post("/users", findUsers);
+router.post("/user/artistas/:id", showArtist2);
 router.get("/users/:id", findOneUser);
 router.post("/users/:id", postOther);
+router.post("/users/add/:id", addUser);
+router.get("/profile", getUploadImg);
+router.post("/profile/music", uploadMusic2);
+router.get("/profile/music", showMusic);
+router.post("/profile/picture", uploadCloud.single("photo"), postPostImg2);
+router.post("/profile/artistas", showArtist);
+router.get("/profile/eventos", showEvents);
+router.post("/profile/eventos", postEvent);
 module.exports = router;

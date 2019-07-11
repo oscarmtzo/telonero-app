@@ -14,7 +14,7 @@ const passport = require("./config/passport");
 const session = require("express-session");
 // Middleware for check logged user
 const { checkLoggedUser } = require("./middlewares/auth");
-
+const expressHandlebars = require("express-handlebars");
 
 mongoose
   .connect("mongodb://localhost/loginapp", { useNewUrlParser: true })

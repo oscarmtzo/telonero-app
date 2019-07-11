@@ -12,36 +12,61 @@
   <div class="mapa">
     <div class="tarjeta">
       <h2>Oh hi {{user.name}}</h2>
+      <img src="{{user.profileImg}}">
     </div>
+    <form action="/profile/picture" method="post" enctype="multipart/form-data">
+      <label for="poster">Poster</label>
+      <input type="file" name="photo" id="poster">
+      <input type="submit" value="save">
+    </form>
     <div id='map' style='width: 400px; height: 300px;'></div>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
     <script>
       mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
       var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11'
       });
+      let rightNow = new Date();
+      let today = rightNow.toISOString().slice(0, 10)
     </script>
   </div>
+
   <div class="posts">
+    <div class="seleccionar">
+      <div>
+        Posts
+      </div>
+      <div class="artistas">
+        <form action="/profile/artistas" method="POST">
+          <button type="submit"> Recomendados </button>
+        </form>
+      </div>
+      <div class="musica">
+        <a href="/profile/music"> <button type="submit"> Musica </button></a>
+
+      </div>
+      <div class="eventos">
+        <form action="/profile/eventos" method="POST">
+          <button type="submit"> Eventos </button>
+        </form>
+      </div>
+    </div>
     <form action="/profile" method="post">
 
       <label for="content">content</label>
       <input type="text" name="content" class="content">
-
-      </di>
-      <button type="submit">Post</button>
     </form>
     {{#each post}}
     <div>
-      <p>{{this.name}} </p>
-      <p>{{this.content}}</p>
+      <p>{{ this.name }} </p>
+      <p>{{ this.content }}</p>
 
     </div>
-    {{/each}}
+    {{/ each}}
   </div>
   <div class="reproductor">
     <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0"
       allowtransparency="true" allow="encrypted-media"></iframe>
   </div>
 </div>
-<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>

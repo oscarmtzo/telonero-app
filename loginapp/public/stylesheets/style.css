@@ -46,7 +46,7 @@ a {
   display: flex;
   flex-direction: column;
   background-color: #00ff22;
-  width: 59vw;
+  width: 58vw;
   height: 100vh; }
 
 .reproductor {
@@ -61,5 +61,10 @@ a {
   color: red;
   width: 90%;
   height: 20%; }
+
+.seleccionar {
+  display: flex;
+  flex-direction: row;
+  height: 8vh; }
 
 /*# sourceMappingURL=style.css.map */

@@ -7,7 +7,15 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true
-    }
+    },
+    artistas: Array,
+    profileImg: {
+      type: String,
+      default:
+        "https://ialmahue.com/wp-content/uploads/2017/12/profile-img-placeholder.png"
+    },
+    musica: Array,
+    events: Array
   },
   {
     timestamps: true,

@@ -7,9 +7,6 @@
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
-  <form action="/users/add/{{id}}" method="POST" class="agregar">
-    <button type="submit">Agregar artista</button>
-  </form>
 </nav>
 <div class="todo">
   <div class="mapa">
@@ -17,9 +14,12 @@
       <h2>Oh hi {{user.name}}</h2>
       <img src="{{user.profileImg}}">
     </div>
-    <div id='map' style='width: 400px; height: 300px;'>
-    </div>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+    <form action="/profile/picture" method="post" enctype="multipart/form-data">
+      <label for="poster">Poster</label>
+      <input type="file" name="photo" id="poster">
+      <input type="submit" value="save">
+    </form>
+    <div id='map' style='width: 400px; height: 300px;'></div>
     <script>
       mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
       var map = new mapboxgl.Map({
@@ -31,12 +31,10 @@
   <div class="posts">
     <div class="seleccionar">
       <div class="posts">
-        Posts
+        <a href="profile">Posts</a>
       </div>
       <div class="artistas">
-        <form action="/user/artistas/{{id}}" method="POST">
-          <button type="submit"> recomendados </button>
-        </form>
+        Artistas recomendados
       </div>
       <div class="musica">
         Musica
@@ -45,24 +43,16 @@
         Eventos
       </div>
     </div>
-    <form action="/users/{{id}}" method="post">
-
-      <label for="content">content</label>
-      <input type="text" name="content" class="content">
-
-
-      <button type="submit">Post</button>
-    </form>
-    {{#each post}}
     <div>
-      <p>{{this.name}} </p>
-      <p>{{this.content}}</p>
-
+      <form action="/profile/music" method="POST" enctype="">
+        <input type="file" accept=".mp3" name="music">
+        <button type="submit">Post</button>
+      </form>
     </div>
-    {{/each}}
   </div>
   <div class="reproductor">
     <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0"
       allowtransparency="true" allow="encrypted-media"></iframe>
   </div>
 </div>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
