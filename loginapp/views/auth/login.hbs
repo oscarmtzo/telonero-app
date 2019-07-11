@@ -1,12 +1,47 @@
-<div class="signup">
-  {{#if err}}
-  <h2>{{err}}</h2>
-  {{else}}
-  <h2>Login</h2>
-  {{/if}}
-  <form action="/login" method="POST">
-    <input type="email" name="email" placeholder="Email" />
-    <input type="password" name="password" placeholder="Password" />
-    <input type="submit" value="Login">
-  </form>
+<!--<div class="inicioUsuario">
+  <div>
+    {{#if err}}
+    <h2>{{err}}</h2>
+    {{else}}
+    <h2>Login</h2>
+    {{/if}}
+  </div>
+  <div class="login">
+    <form action="/login" method="POST">
+      <input type="email" name="email" placeholder="Email" />
+      <input type="password" name="password" placeholder="Password" />
+      <input type="submit" value="Login">
+    </form>
+  </div>
+</div>-->
+<div class="publico">
+  <div class="login-box">
+    
+    <div>
+      {{#if err}}
+      <h1>{{err}}</h1>
+      {{else}}
+      <h1>Login</h1>
+      {{/if}}
+    </div>
+    <form action="/login" method="POST">
+      <div class="textbox">
+      </div>
+      <div class="textbox">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        
+        <input type="email" name="email" placeholder="Email" />
+      </div>
+      <div class="textbox">
+        <i class="fa fa-lock" aria-hidden="true"></i>
+        <input type="password" placeholder="Password" name="password" value="">
+      </div>
+      <div class="button" id="button-2" style="border:2px solid white; background-color: transparent">
+        <p style="color: white">LOGIN</p>
+      <div id="slide">
+      <input id="transp" type="submit" value="Login">
+      </div>
+      </div>
+    </form>
+  </div>
 </div>

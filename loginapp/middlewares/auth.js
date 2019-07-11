@@ -5,5 +5,6 @@ exports.checkLoggedUser = (req, res, next) => {
   next();
 };
 
-exports.isLoggedIn = (req, res, next) =>
+exports.isLoggedIn = (req, res, next) =>{
   req.isAuthenticated() ? next() : res.redirect("/login");
+}

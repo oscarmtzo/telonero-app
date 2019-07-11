@@ -1,10 +1,43 @@
-<!--- views/auth/signup.hbs -->
-<div class="signup">
+<!--
+<div class="inicioUsuario">
   <h2>Signup</h2>
   <form action="/signup" method="POST">
     <input type="name" name="name" placeholder="Name" />
     <input type="email" name="email" placeholder="Email" />
     <input type="password" name="password" placeholder="Password" />
+    <div class="rs-select2 js-select-simple select--no-search">
+      <select name="gender">
+        <option disabled="disabled" selected="selected">Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+    <div class="select-dropdown"></div>
+    </div>
     <input type="submit" value="Register">
   </form>
+</div>-->
+<div class="publico">
+  <div class="login-box">
+    <h1>Signup</h1>
+    <form action="/signup" method="POST">
+      <div class="textbox">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <input type="name" placeholder="Name" name="name">
+      </div>
+      <div class="textbox">
+        &nbsp;&nbsp;&nbsp;<input type="email" name="email" placeholder="Email" />
+      </div>
+      <div class="textbox">
+        <i class="fa fa-lock" aria-hidden="true"></i>
+        <input type="password" placeholder="Password" name="password">
+      </div>
+      <div class="button" id="button-2" style="border:2px solid white; background-color: transparent">
+        <p style="color: white">REGISTER</p>
+      <div id="slide">
+      <input id="transp" type="submit" value="Register">
+      </div>
+      </div>
+    </form>
+  </div>
 </div>
