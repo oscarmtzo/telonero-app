@@ -2,8 +2,8 @@ const { model, Schema } = require("mongoose");
 const musicSchema = new Schema(
   {
     name: String,
-    path: String,
-    originalname: String
+    creatorId: String,
+    path: String
   },
   {
     timestamps: true

@@ -20,16 +20,7 @@
       <input type="submit" value="save">
     </form>
     <div id='map' style='width: 400px; height: 300px;'></div>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
-    <script>
-      mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
-      var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11'
-      });
-      let rightNow = new Date();
-      let today = rightNow.toISOString().slice(0, 10)
-    </script>
+
   </div>
 
   <div class="posts">
@@ -38,18 +29,14 @@
         Posts
       </div>
       <div class="artistas">
-        <form action="/profile/artistas" method="POST">
-          <button type="submit"> Recomendados </button>
-        </form>
+        <a href="profile/artistas">Recomendados</a>
       </div>
       <div class="musica">
-        <a href="/profile/music"> <button type="submit"> Musica </button></a>
+        <a href="/profile/music"> Musica </a>
 
       </div>
       <div class="eventos">
-        <form action="/profile/eventos" method="POST">
-          <button type="submit"> Eventos </button>
-        </form>
+        <a href="/profile/eventos">Eventos</a>
       </div>
     </div>
     <form action="/profile" method="post">
@@ -70,3 +57,37 @@
       allowtransparency="true" allow="encrypted-media"></iframe>
   </div>
 </div>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11'
+  });
+  let rightNow = new Date();
+  rightNow.setHours(rightNow.getHours() - 7);
+  let today = rightNow.toISOString().slice(0, 10)
+  let n, mark, pop;
+
+  axios.get("/profile?json=1")
+    .then(res => {
+      console.log(res)
+      const { events } = res.data;
+
+      events.forEach(event => {
+        console.log(today)
+        if (event.fecha == today) {
+          n = event.name
+          pop = new mapboxgl.Popup().setText(n);
+          mark = new mapboxgl.Marker()
+            .setLngLat({ lng: event.location.coordinates[0], lat: event.location.coordinates[1] })
+            .setPopup(pop)
+            .addTo(map);
+        }
+      })
+
+    });
+
+
+</script>

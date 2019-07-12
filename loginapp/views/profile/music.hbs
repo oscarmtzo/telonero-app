@@ -20,35 +20,35 @@
       <input type="submit" value="save">
     </form>
     <div id='map' style='width: 400px; height: 300px;'></div>
-    <script>
-      mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
-      var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11'
-      });
-    </script>
   </div>
   <div class="posts">
     <div class="seleccionar">
       <div class="posts">
-        <a href="profile">Posts</a>
+        <a href="/profile">Posts</a>
       </div>
       <div class="artistas">
-        Artistas recomendados
+        <a href="/profile/artistas">Artistas recomendados</a>
       </div>
       <div class="musica">
         Musica
       </div>
       <div class="eventos">
-        Eventos
+        <a href="/profile/eventos">Eventos</a>
       </div>
     </div>
     <div>
-      <form action="/profile/music" method="POST" enctype="">
-        <input type="file" accept=".mp3" name="music">
+      <form action="/profile/music" method="POST" enctype="multipart/form-data">
+        <lable for="nombre">Ingresa el nombre tu cancion</lable>
+        <input type="text" name="nombre">
+        <label for="file">Ingresa un mp3 de tu musica</label>
+        <input type="file" name="file" id="musca">
         <button type="submit">Post</button>
       </form>
     </div>
+    {{#each music}}
+    <h2>{{this.name}} </h2>
+    <audio src="{{this.path}}" controls></audio>
+    {{/each}}
   </div>
   <div class="reproductor">
     <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0"

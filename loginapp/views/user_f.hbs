@@ -12,44 +12,24 @@
   <div class="mapa">
     <div class="tarjeta">
       <h2>Oh hi {{user.name}}</h2>
-      <img src="{{user.profileImg}}">
+      <a href="/profile"> <img src="{{user.profileImg}}"></a>
     </div>
-    <form action="/profile/picture" method="post" enctype="multipart/form-data">
-      <label for="poster">Poster</label>
-      <input type="file" name="photo" id="poster">
-      <input type="submit" value="save">
-    </form>
-    <div id='map' style='width: 400px; height: 300px;'></div>
-    <script>
-      mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
-      var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11'
-      });
-    </script>
   </div>
   <div class="posts">
     <div class="seleccionar">
       <div class="posts">
-        Posts
+        <a href="/users/{{id}}">Posts</a>
       </div>
       <div class="artistas">
         Artistas recomendados
       </div>
       <div class="musica">
-        Musica
+        <a href="/users/music/{{id}}">Musica</a>
       </div>
       <div class="eventos">
-        Eventos
+        <a href="/users/events/{{id}}">Eventos</a>
       </div>
     </div>
-    <form action="/profile" method="post" enctype="multipart/form-data">
-
-      <label for="content">content</label>
-      <input type="text" name="content" class="content">
-      <input type="file" name="photo" id="poster">
-      <button type="submit">Post</button>
-    </form>
     {{#each artist}}
     <p>si</p>
     <a href="/users/{{this.id}}"> <img src="{{this.profileImg}}"></a>

@@ -7,6 +7,8 @@ const uploadCloud = require("../config/cloudinary");
 const Picture = require("../models/picture");
 const Music = require("../models/music");
 const Event = require("../models/event");
+const bucket = require("../config/googleStorage");
+
 exports.getSignup = (req, res, next) => res.render("auth/signup");
 
 exports.postSignup = async (req, res, next) => {
@@ -25,13 +27,21 @@ exports.postLogin = passport.authenticate("local", {
   successRedirect: "/profile"
 });
 
-exports.getProfile = (req, res, next) =>
+exports.getProfile = (req, res, next) => {
+  console.log(req.query);
+  const { json } = req.query;
+  console.log(json);
   Post.find({ user: req.user.name }).then(post => {
     console.log(req.user.name);
-    Event.find().then(events =>
-      res.render("profile/private", { user: req.user, post, events })
-    );
+    Event.find().then(events => {
+      if (json) {
+        console.log("perro");
+        return res.json({ events });
+      }
+      return res.render("profile/private", { user: req.user, post, events });
+    });
   });
+};
 
 exports.logout = (req, res, next) => {
   req.logOut();
@@ -40,6 +50,7 @@ exports.logout = (req, res, next) => {
 exports.findUsers = (req, res) => {
   User.find({ name: req.body.search })
     .then(users => {
+      console.log(users);
       res.render("users", { user: req.user, users });
     })
     .catch(err => console.log("Error!:", err));
@@ -100,17 +111,23 @@ exports.showArtist = (req, res) => {
     .catch(err => console.log("Error!:", err));
 };
 exports.showMusic = (req, res) => {
-  User.findById(req.user.id).then(user => {
-    let musica = [];
-    for (let i = 0; i < user.artistas.length; i++) {
-      User.findById(user.musica[i])
-        .then(user2 => {
-          musica.push(user2);
+  Music.find({ creatorId: req.user.id })
+    .then(music => {
+      res.render("profile/music", { music });
+    })
+    .catch();
+};
+exports.showMusic2 = (req, res) => {
+  const { id } = req.params;
+  User.find(req.params)
+    .then(user => {
+      Music.find({ creatorId: id })
+        .then(music => {
+          res.render("user_m", { music, id, user: req.user });
         })
         .catch();
-    }
-    res.render("profile/music", { user: req.user, music: musica });
-  });
+    })
+    .catch();
 };
 exports.showArtist2 = (req, res) => {
   let { id } = req.params;
@@ -125,7 +142,7 @@ exports.showArtist2 = (req, res) => {
           })
           .catch();
       }
-      res.render("profile/featured", { user: req.user, artist: artistas });
+      res.render("user_f", { user: req.user, artist: artistas, id });
     })
     .catch(err => console.log("Error!:", err));
 };
@@ -149,37 +166,56 @@ exports.postPostImg2 = async (req, res, next) => {
     }
   );
 };
-exports.uploadMusic2 = async (req, res, next) => {
-  let b;
-  const a = await cloudinary.uploader.upload(
-    "music",
-    function(result) {
-      b = result.url;
-      res.send({
-        result: result,
-        serverStatus: 200,
-        response_message: "audio uploaded"
+exports.uploadMusic2 = (req, res) => {
+  let file = req.file;
+  const uploadImageToStorage = file => {
+    return new Promise((resolve, reject) => {
+      if (!file) {
+        reject("No image file");
+      }
+      let newFileName = `${file.originalname}_${Date.now()}`;
+
+      let fileUpload = bucket.file(newFileName);
+
+      const blobStream = fileUpload.createWriteStream({
+        metadata: {
+          contentType: file.mimetype
+        }
       });
-    },
-    {
-      resource_type: "video"
-    }
-  );
-  const { fieldname, originalname, url } = a;
-  await Music.create({
-    name: fieldname,
-    path: url,
-    originalName: originalname
-  });
-  User.findByIdAndUpdate(
-    req.user.id,
-    { $push: { musica: b } },
-    { new: true, upsert: true },
-    function(err, managerparent) {
-      if (err) throw err;
-      res.redirect(`/profile/music`);
-    }
-  );
+
+      blobStream.on("error", error => {
+        reject("Something is wrong! Unable to upload at the moment.");
+      });
+
+      blobStream.on("finish", () => {
+        // The public URL can be used to directly access the file via HTTP.
+        const url = format(
+          `https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`
+        );
+        resolve(url);
+      });
+
+      blobStream.end(file.buffer);
+    });
+  };
+  let name = req.body.name;
+  let creatorId = req.user.id;
+  if (file) {
+    uploadImageToStorage(file)
+      .then(success => {
+        const newMusic = new Music({
+          name,
+          creatorId
+        });
+        newMusic.then(music => res.redirect("/profile/music"));
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  } else {
+    console.log("nada");
+    res.redirect("/profile/music");
+  }
 };
 
 exports.showEvents = (req, res) => {
@@ -189,23 +225,28 @@ exports.showEvents = (req, res) => {
     })
     .catch(err => console.log("Error!:", err));
 };
-exports.postEvent = (req, res) => {
-  const name = req.body.name;
-  const description = req.body.description;
-  const fecha = req.body.fecha;
-  const latitud = req.body.latitud;
-  const longitud = req.body.longitud;
+exports.showEvents2 = (req, res) => {
   const { id } = req.params;
   User.findById(id)
     .then(user => {
-      const newPost = new Event({
-        name,
-        description,
-        fecha,
-        latitud,
-        longitud
+      res.render("user_e", { user: req.user, events: user.events, id });
+    })
+    .catch(err => console.log("Error!:", err));
+};
+
+exports.postEvent = (req, res) => {
+  const { name, description, fecha, latitud, longitud } = req.body;
+  const { id } = req.params;
+
+  User.findById(id)
+    .then(user => {
+      const newEvent = new Event({
+        ...req.body,
+        location: {
+          coordinates: [Number(longitud), Number(latitud)]
+        }
       });
-      newPost
+      newEvent
         .save()
         .then(x => {
           User.findByIdAndUpdate(

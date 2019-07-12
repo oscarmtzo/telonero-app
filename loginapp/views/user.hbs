@@ -15,18 +15,10 @@
   <div class="mapa">
     <div class="tarjeta">
       <h2>Oh hi {{user.name}}</h2>
-      <img src="{{user.profileImg}}">
-    </div>
-    <div id='map' style='width: 400px; height: 300px;'>
+      <a href="/profile"><img src="{{user.profileImg}}"></a>
     </div>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
-    <script>
-      mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
-      var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11'
-      });
-    </script>
+
   </div>
   <div class="posts">
     <div class="seleccionar">
@@ -34,15 +26,14 @@
         Posts
       </div>
       <div class="artistas">
-        <form action="/user/artistas/{{id}}" method="POST">
-          <button type="submit"> recomendados </button>
-        </form>
+        <a href="/users/artistas/{{id}}">Artistas</a>
       </div>
       <div class="musica">
-        Musica
+
+        <a href="/users/music/{{id}}">Musica</a>
       </div>
       <div class="eventos">
-        Eventos
+        <a href="/users/events/{{id}}">Eventos</a>
       </div>
     </div>
     <form action="/users/{{id}}" method="post">

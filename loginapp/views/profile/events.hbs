@@ -19,39 +19,67 @@
       <input type="file" name="photo" id="poster">
       <input type="submit" value="save">
     </form>
+
+
   </div>
   <div class="posts">
     <div class="seleccionar">
       <div class="posts">
-        Posts
+        <a href="/profile">Posts</a>
       </div>
       <div class="artistas">
-        <form action="/profile/artistas" method="POST">
-          <button type="submit"> recomendados </button>
-        </form>
+        <a href="/profile/artistas">Artistas</a>
       </div>
       <div class="musica">
-        <a href="/profile/music"> <button type="submit"> Musica </button></a>
+        <a href="/profile/music"> Musica </a>
 
       </div>
       <div class="eventos">
         Eventos
       </div>
     </div>
-    <form action="/profile/eventos" method="post">
+    <form action="/profile/eventos" method="post" novalidate>
 
       <label for="name">Nombre del evento </label>
       <input type="text" name="name" class="content">
-      <label for="description">Descripsion del evento</label>
+      <label for="description">Descripsion del evento(recuerda escribir tu direccion(solo guardamos la ubicacion)y hora
+        del evento)</label>
       <input type="text" name="description">
       <label for="fecha">Fecha del evento</label>
       <input type="date" name="fecha">
       <button type="submit">Crear evento</button>
-      <label for="longitud">Inserta la longitud de la ubicacion de tu evento</label>
+      <input type="number" name="longitud" id="longitud" hidden>
+      <input type="number" name="latitud" id="latitud" hidden>
+      <!--<label for="longitud">Inserta la longitud de la ubicacion de tu evento</label>
       <input type="text" name="longitud">
       <label for="latitud">Inserta la latitud de la ubicacion de tu evento</label>
-      <input type="text" name="latitud">
+      <input type="text" name="latitud">-->
     </form>
+    <div class="seleccionar">
+      <div id='map' style='width: 400px; height: 300px;'></div>
+    </div>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+    <script
+      src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.1/mapbox-gl-geocoder.min.js'></script>
+    <script>
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY2h1Y2E5OSIsImEiOiJjanhtMmNoajcwY2d5M3JtZ2F5am15cnN3In0.bKS7-zBZuo3040BnEcmqkA';
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11'
+      });
+      const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl
+      })
+      map.addControl(geocoder)
+      geocoder.on("result", ({ result: { center } }) => {
+        console.log(center)
+        document.querySelector("#longitud").value = center[0]
+        document.querySelector("#latitud").value = center[1]
+      })
+    </script>
+
     {{#each events as |event|}}
     <div>
       <p>{{event.name}} </p>

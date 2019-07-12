@@ -2,10 +2,12 @@ require("dotenv").config();
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const admin = require("firebase-admin");
 const express = require("express");
 const favicon = require("serve-favicon");
 const hbs = require("hbs");
 const mongoose = require("mongoose");
+const googleStorage = require("@google-cloud/storage");
 const logger = require("morgan");
 const path = require("path");
 // Require passport !!IMPORTANT!!, our own configured passport
